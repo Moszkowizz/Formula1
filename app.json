@@ -1,0 +1,149 @@
+{
+  "id": "com.athom.formula1",
+  "version": "1.0.0",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
+  "name": {
+    "en": "Formula 1",
+    "nl": "Formule 1"
+  },
+  "tags": {
+        "en": ["Formula one", "F1", "Racing"],
+        "nl": ["Formule 1", "F1", "Race"]
+    },
+  "description": {
+    "en": "This app lets you integrate the current Formula 1 schedule in Homey!",
+    "nl": "Deze app maakt het mogelijk om het Formule 1 seizoensschema te integreren in Homey!"
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Bram van Rooijen",
+    "email": "bram@athom.nl"
+  },
+  "flow": {
+     "triggers": [
+      {
+        "id": "race_start",
+        "title": {
+          "en": "The race starts",
+          "nl": "De race gaat beginnen"
+        }
+      },
+      {
+        "id": "race_in",
+        "title": {
+          "en": "The race is going to start in...",
+          "nl": "De race gaat beginnen in..."
+        },
+        "args": [
+          {
+            "name": "when",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "5",
+                "label": {
+                  "en": "5 minutes",
+                  "nl": "5 minuten"
+                }
+              },
+              {
+                "id": "10",
+                "label": {
+                  "en": "10 minutes",
+                  "nl": "10 minuten"
+                }
+              },
+              {
+                "id": "15",
+                "label": {
+                  "en": "15 minutes",
+                  "nl": "15 minuten"
+                }
+              },
+              {
+                "id": "30",
+                "label": {
+                  "en": "30 minutes",
+                  "nl": "30 minuten"
+                }
+              },
+              {
+                "id": "45",
+                "label": {
+                  "en": "45 minutes",
+                  "nl": "45 minuten"
+                }
+              },
+              {
+                "id": "60",
+                "label": {
+                  "en": "1 hour",
+                  "nl": "1 hour"
+                }
+              },
+              {
+                "id": "90",
+                "label": {
+                  "en": "1.5 hours",
+                  "nl": "1.5 uur"
+                }
+              },
+              {
+                "id": "120",
+                "label": {
+                  "en": "2 hours",
+                  "nl": "2 uur"
+                }
+              }
+            ]
+          }
+        ]
+      }
+      ],
+      "conditions": [
+        {
+          "id": "Racing in",
+          "title": {
+            "en": "The race is going to start in...",
+            "nl": "De race gaat beginnen in..."
+          },
+          "args": [
+                {
+                    "name": "when",
+                    "type": "dropdown",
+                    "values": [
+                        {
+                            "id": "5",
+                            "label": {
+                                "en": "5 minutes"
+                            }
+                        },
+                        {
+                            "id": "10",
+                            "label": {
+                                "en": "10 minutes"
+                            }
+                        },
+                        {
+                            "id": "15",
+                            "label": {
+                                "en": "15 minutes"
+                            }
+                        }
+
+                    ]
+                }
+        ]
+       }
+    ]
+  }
+
+}
