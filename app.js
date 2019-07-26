@@ -1,36 +1,37 @@
 'use strict';
 
 const Homey = require('homey');
+const FormulaOneApi = require('./lib/FormulaOneApi');
 
-class MyApp extends Homey.App {
+class FormulaOne extends Homey.App {
 	
 	onInit() {
-		const fetch = require('node-fetch');
+		this.api = new FormulaOneApi();
 
-		async function getRaces() {
-		    const res = await fetch('http://ergast.com/api/f1/current.json');
-		    const json = await res.json();
-		    return json.MRData.RaceTable.Races;
-		}
+		this.nextRace = this.api.getNextRace();
+		// todo trigger flow
 
-		getRaces()
-		    .then(races => {
-		        races.forEach(race => {
-		            console.log(race.raceName, race.date, race.time)
-		        });
-		    })
-		    .catch(error => {
-		        console.error(error)
-		    })
+
     	let raceStartTrigger = new Homey.FlowCardTrigger('race_start');
 		raceStartTrigger
     		.register()
     	raceStartTrigger.trigger()
         	.catch( this.error )
-        	.then( this.log )
+			.then( this.log )
+		
+		this.getData();
+	}
+
+	async getData() {
+		const result = await this.api.getNextRace();
+		console.log(`${(Homey.__("location"))} :${result.circuit}`);
+
+		const winner = await this.api.getWinner();
+		console.log('Winner', winner);
+
+		this.api.getTopThree();
 	}
 	
 }
 
-
-module.exports = MyApp;
+module.exports = FormulaOne;
