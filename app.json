@@ -42,9 +42,29 @@
         "title": {
           "en": "The next race starts",
           "nl": "De volgende race begint"
+        },
+        "tokens": [
+          {
+            "name": "race_name",
+            "type": "string",
+            "title": {
+              "en": "Racename",
+              "nl": "Racenaam"
+            },
+            "example": "Monaco"
+        },
+        {
+          "name": "circuit",
+          "type": "string",
+          "title": {
+            "en": "Circuit",
+            "nl": "Circuit"
+          },
+          "example": "Monza"
         }
-      },
-      {
+      ]
+    },
+    {
         "id": "race_in",
         "title": {
           "en": "The race is going to start in...",
@@ -52,7 +72,7 @@
         },
         "args": [
           {
-            "name": "when",
+            "name": "time_before",
             "type": "dropdown",
             "values": [
               {
@@ -70,24 +90,10 @@
                 }
               },
               {
-                "id": "15",
-                "label": {
-                  "en": "15 minutes",
-                  "nl": "15 minuten"
-                }
-              },
-              {
                 "id": "30",
                 "label": {
                   "en": "30 minutes",
                   "nl": "30 minuten"
-                }
-              },
-              {
-                "id": "45",
-                "label": {
-                  "en": "45 minutes",
-                  "nl": "45 minuten"
                 }
               },
               {
@@ -96,62 +102,38 @@
                   "en": "1 hour",
                   "nl": "1 hour"
                 }
-              },
-              {
-                "id": "90",
-                "label": {
-                  "en": "1.5 hours",
-                  "nl": "1.5 uur"
-                }
-              },
-              {
-                "id": "120",
-                "label": {
-                  "en": "2 hours",
-                  "nl": "2 uur"
-                }
               }
             ]
           }
         ]
-      }
-      ],
-      "conditions": [
+        },
         {
-          "id": "Racing in",
+          "id": "winner",
           "title": {
-            "en": "The race is going to start in...",
-            "nl": "De race gaat beginnen in..."
+            "en": "The race is won by",
+            "nl": "De race is gewonnen door"
           },
-          "args": [
-                {
-                    "name": "when",
-                    "type": "dropdown",
-                    "values": [
-                        {
-                            "id": "5",
-                            "label": {
-                                "en": "5 minutes"
-                            }
-                        },
-                        {
-                            "id": "10",
-                            "label": {
-                                "en": "10 minutes"
-                            }
-                        },
-                        {
-                            "id": "15",
-                            "label": {
-                                "en": "15 minutes"
-                            }
-                        }
-
-                    ]
-                }
+          "tokens": [
+            {
+              "name": "driver_name",
+              "type": "string",
+              "title": {
+                "en": "Driver",
+                "nl": "Coureur"
+              },
+              "example": "Max Verstappen"
+          }
         ]
-       }
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_racing",
+        "title": {
+          "en": "Race is ongoing",
+          "nl": "Race is gaande"
+        }
+      }
     ]
   }
-
 }
