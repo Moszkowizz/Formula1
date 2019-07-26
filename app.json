@@ -1,12 +1,13 @@
 {
   "id": "com.athom.formula1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=2.4.0",
   "sdk": 2,
   "name": {
     "en": "Formula 1",
     "nl": "Formule 1"
   },
+  "brandcolor": "#FF0100",
   "tags": {
         "en": ["Formula one", "F1", "Racing"],
         "nl": ["Formule 1", "F1", "Race"]
