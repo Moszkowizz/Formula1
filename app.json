@@ -1,7 +1,7 @@
 {
   "id": "com.athom.formula1",
   "version": "1.0.0",
-  "compatibility": ">=1.5.0",
+  "compatibility": ">=2.4.0",
   "sdk": 2,
   "name": {
     "en": "Formula 1",
@@ -27,13 +27,21 @@
     "name": "Bram van Rooijen",
     "email": "bram@athom.nl"
   },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Kyle Taylor Parkins",
+        "email": "kyle@athom.nl"
+      }
+    ]
+  },
   "flow": {
      "triggers": [
       {
         "id": "race_start",
         "title": {
-          "en": "The race starts",
-          "nl": "De race gaat beginnen"
+          "en": "The next race starts",
+          "nl": "De volgende race begint"
         }
       },
       {

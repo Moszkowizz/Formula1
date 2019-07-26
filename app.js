@@ -8,18 +8,30 @@ class FormulaOne extends Homey.App {
 	onInit() {
 		this.api = new FormulaOneApi();
 
-		this.nextRace = this.api.getNextRace();
+		this.setTimerRaceStart();
+
 		// todo trigger flow
 
+    	this.raceStartTriggerFlow = new Homey.FlowCardTrigger('race_start');
+		this.raceStartTriggerFlow
+    		.register();
+	}
 
-    	let raceStartTrigger = new Homey.FlowCardTrigger('race_start');
-		raceStartTrigger
-    		.register()
-    	raceStartTrigger.trigger()
-        	.catch( this.error )
-			.then( this.log )
-		
-		this.getData();
+	async setTimerRaceStart() {
+		this.nextRace = await this.api.getNextRace();
+		//this.raceStartTime = new Date(`${this.nextRace.date}T${this.nextRace.time}`);
+		this.raceStartTime = new Date(`2019-07-26T11:13:00`);
+
+		console.log('Tijd ding 1', this.raceStartTime);
+
+		const timeDelta = this.raceStartTime.getTime() - Date.now();
+		console.log('tijd ding 2', timeDelta);
+
+		setTimeout(() => {
+			console.log('Starting flow!');
+			this.raceStartTriggerFlow.trigger()
+				.catch(console.error());
+		}, timeDelta);
 	}
 
 	async getData() {
@@ -31,7 +43,6 @@ class FormulaOne extends Homey.App {
 
 		this.api.getTopThree();
 	}
-	
 }
 
 module.exports = FormulaOne;
