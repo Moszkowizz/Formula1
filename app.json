@@ -1,6 +1,6 @@
 {
   "id": "com.athom.formula1",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=2.4.0",
   "sdk": 2,
   "name": {
@@ -104,7 +104,27 @@
                   "nl": "1 hour"
                 }
               }
-            ]
+            ],
+            "tokens": [
+              {
+                "name": "race_name",
+                "type": "string",
+                "title": {
+                  "en": "Racename",
+                  "nl": "Racenaam"
+                },
+                "example": "Monaco"
+            },
+            {
+              "name": "circuit",
+              "type": "string",
+              "title": {
+                "en": "Circuit",
+                "nl": "Circuit"
+              },
+              "example": "Monza"
+            }
+          ]
           }
         ]
         },

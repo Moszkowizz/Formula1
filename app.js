@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const FormulaOneApi = require('./lib/FormulaOneApi');
 
-const AFTER_RACE_TIMEOUT = 2 * 60 * 60 * 1000; // 2 hours in miliseconds
+const AFTER_RACE_TIMEOUT = 2.5 * 60 * 60 * 1000; // 2.5 hours in miliseconds
 const RACE_DURATION = 2 * 60 * 60 * 1000; // 2 hours in miliseconds
 const DATA_REFRESH_TIMEOUT = 24 * 60 * 60 *1000; // 24 hours data refresh in milliseconds
 
@@ -45,7 +45,7 @@ class FormulaOne extends Homey.App {
 
 		// Create app tokens
 		this.driverStandingTokens = [];
-		for (var counter =0; counter <= 20; counter++) {
+		for (var counter = 0; counter <= 19; counter++) {
 			this.driverStandingTokens.push(
 				new Homey.FlowToken(`standing_${counter}`, {
 					type: 'string',
@@ -66,6 +66,7 @@ class FormulaOne extends Homey.App {
 			this.log('Updating data from API');
 			this.fillDriverStandingTokens();
 			this.setTimerRaceStart();
+			this.setTimerBeforeRaceStart();
 			this.triggerWinnerFlow();
 		}, DATA_REFRESH_TIMEOUT);
 	}
@@ -75,6 +76,8 @@ class FormulaOne extends Homey.App {
 		this.raceStartTime = new Date(`${this.nextRace.date}T${this.nextRace.time}`);
 
 		const timeDelta = (this.raceStartTime.getTime() - Date.now());
+
+		if (timeDelta <= 0) return; // We don't want to trigger after the race has started
 
 		this.raceStartTimeout = setTimeout(() => {
 			this.log('Starting race starts trigger');
@@ -92,26 +95,40 @@ class FormulaOne extends Homey.App {
 
 		const timeDelta = (this.raceStartTime.getTime() - Date.now());
 
+		if (timeDelta <= 0) return; // We don't want to trigger after the race has started
+
 		this.log('Setting timers for before_start trigger with timeout', timeDelta);
 
 		this.fiveMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 5 minutes start timer');
-			this.raceStartsInTriggerFlow.trigger(undefined, {time: "5"} );
+			this.raceStartsInTriggerFlow.trigger({
+				race_name: this.nextRace.raceName,
+				circuit: this.nextRace.circuit,
+			}, {time: "5"} );
 		}, (timeDelta - (5*60*1000)) );
 
 		this.tenMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 10 minutes start timer');
-			this.raceStartsInTriggerFlow.trigger(undefined, {time: "10"} );
+			this.raceStartsInTriggerFlow.trigger({
+				race_name: this.nextRace.raceName,
+				circuit: this.nextRace.circuit,
+			}, {time: "10"} );
 		}, (timeDelta - (10*60*1000)) );
 
 		this.thirtyMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 30 minutes start timer');
-			this.raceStartsInTriggerFlow.trigger(undefined, {time: "30"} );
+			this.raceStartsInTriggerFlow.trigger({
+				race_name: this.nextRace.raceName,
+				circuit: this.nextRace.circuit,
+			}, {time: "30"} );
 		}, (timeDelta - (30*60*1000)) );
 
 		this.sixtyMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 60 minutes start timer');
-			this.raceStartsInTriggerFlow.trigger(undefined, {time: "60"} );
+			this.raceStartsInTriggerFlow.trigger({
+				race_name: this.nextRace.raceName,
+				circuit: this.nextRace.circuit,
+			}, {time: "60"} );
 		}, (timeDelta - (60*60*1000)) );
 	}
 

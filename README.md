@@ -21,9 +21,13 @@ Tokens with the current championship standings.
 
 ## Changelog
 
+### v1.0.2
+Don't trigger flows after race start.
+Various small bug fixes
+
 ### v1.0.0.
 First release
 
 ## Note
-This project is created as a hobby project. Athom will not support this app!
+This project is created in our free time. Athom will not support this app!
 However, you may contact the developers should you experience any bugs.
