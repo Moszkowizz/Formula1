@@ -38,7 +38,7 @@ class FormulaOne extends Homey.App {
 				return this.isRaceOngoing();
 			})
 	
-		// Flows triggeren
+		// Set Flow timeout
 		this.setTimerRaceStart();
 		this.setTimerBeforeRaceStart();
 		this.triggerWinnerFlow();
@@ -79,8 +79,13 @@ class FormulaOne extends Homey.App {
 
 		if (timeDelta <= 0) return; // We don't want to trigger after the race has started
 
+		this.log('Setting timers for race_start trigger with timeout', timeDelta);
+
+		// If the timeout already exists, clear it to prevent multiple flow triggers
+		if (this.raceStartTimeout) clearTimeout(this.raceStartTimeout);
 		this.raceStartTimeout = setTimeout(() => {
 			this.log('Starting race starts trigger');
+			// Trigger the flow and create token data
 			this.raceStartTriggerFlow.trigger({
 				race_name: this.nextRace.raceName,
 				circuit: this.nextRace.circuit,
@@ -99,30 +104,41 @@ class FormulaOne extends Homey.App {
 
 		this.log('Setting timers for before_start trigger with timeout', timeDelta);
 
+		if (this.fiveMinRaceTimeout) clearTimeout(this.fiveMinRaceTimeout);
 		this.fiveMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 5 minutes start timer');
+			// Trigger the flow and create token data
 			this.raceStartsInTriggerFlow.trigger({
 				race_name: this.nextRace.raceName,
 				circuit: this.nextRace.circuit,
 			}, {time: "5"} );
 		}, (timeDelta - (5*60*1000)) );
 
+		if (this.tenMinRaceTimeout) clearTimeout(this.tenMinRaceTimeout);
 		this.tenMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 10 minutes start timer');
+
+			// Trigger the flow and create token data
 			this.raceStartsInTriggerFlow.trigger({
 				race_name: this.nextRace.raceName,
 				circuit: this.nextRace.circuit,
 			}, {time: "10"} );
 		}, (timeDelta - (10*60*1000)) );
 
+
+		if (this.thirtyMinRaceTimeout) clearTimeout(this.thirtyMinRaceTimeout);
 		this.thirtyMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 30 minutes start timer');
+
+			// Trigger the flow and create token data
 			this.raceStartsInTriggerFlow.trigger({
 				race_name: this.nextRace.raceName,
 				circuit: this.nextRace.circuit,
 			}, {time: "30"} );
 		}, (timeDelta - (30*60*1000)) );
 
+
+		if (this.sixtyMinRaceTimeout) clearTimeout(this.sixtyMinRaceTimeout);
 		this.sixtyMinRaceTimeout = setTimeout(() => {
 			this.log('Triggering 60 minutes start timer');
 			this.raceStartsInTriggerFlow.trigger({
@@ -139,6 +155,7 @@ class FormulaOne extends Homey.App {
 		const refreshTimeOut = raceStartTime.getTime() + AFTER_RACE_TIMEOUT;
 		const timeout = refreshTimeOut - Date.now();
 		
+		if (this.winnerTimeout) clearTimeout(this.winnerTimeout);
 		this.winnerTimeout = setTimeout(async () => {
 			const winnerData = await this.api.getWinner();
 			this.raceWonByTriggerFlow.trigger({

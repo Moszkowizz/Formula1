@@ -21,6 +21,9 @@ Tokens with the current championship standings.
 
 ## Changelog
 
+### v1.0.3
+Cancel timers for Flows when setting new ones. This should resolve the issue that Flows related to the race start are triggered multiple times.
+
 ### v1.0.2
 Don't trigger flows after race start.
 Various small bug fixes
